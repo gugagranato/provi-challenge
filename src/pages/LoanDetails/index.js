@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthProvider';
 
 import { Container, ContainerCard, ContainerContent, ImageContent } from './styles';
 import Card from '../../components/Card';
+import SideMenu from '../../components/SideMenu';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -24,32 +25,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LoanDetails() {
-  const { loanDetails } = useLoan();
-  const { signIn } = useAuth();
+  const { loans, loanDetails } = useLoan();
+  const { signIn, data } = useAuth();
 
   const classes = useStyles();
 
-  useEffect(() => {
+
+  const handlSignIn = () => {
     signIn({
-      email: 'adfa@asdf',
-      password: 'data.password',
+      email: 'eve.holt@reqres.in',
+      password: 'pistol',
     });
-  })
+  }
   return (
     <>
       {/* <Container> */}
       <div className={classes.root}>
+        <SideMenu />
         <Grid container spacing={3}>
           <Grid item xs={6} >
+
             <Card
               id={loanDetails?.UserId}
               amountPayd={loanDetails?.amountPayd}
               amountTaken={loanDetails?.amountTaken}
               monthlyInterest={loanDetails?.monthlyInterest}
               totalAmountInTaxes={loanDetails?.totalAmountInTaxes}
-              installments={loanDetails?.installments} />
+              installments={loans?.installments} />
           </Grid>
         </Grid>
+        <button onClick={handlSignIn}>Entar</button>
       </div>
     </>
   );

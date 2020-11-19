@@ -17,8 +17,6 @@ export default function LoanProvider({ children }) {
 
   }, [setLoans, setLoanDetails])
 
-  console.log('loans', loans)
-  console.log('loansDetail', loanDetails)
   return (
     <LoanContext.Provider
       value={{

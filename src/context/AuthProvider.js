@@ -7,40 +7,42 @@ const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [data, setData] = useState();
 
-
-
-
-  useEffect(() => {
-    const isLogged = () => {
-      const token = localStorage.getItem('@Provi:token')
-      const user = localStorage.getItem('@Provi:user')
-    }
-    isLogged()
-  }, [])
-
   const signIn = useCallback(async ({ email, password }) => {
 
-    //  main.js 
-
-    // POST request using fetch() 
     fetch("https://reqres.in/api/login", {
       method: "POST",
       body: JSON.stringify({
-        email: "eve.holt@reqres.in",
-        password: "pistol",
+        email: email,
+        password: password,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-      .then(response => response.json())
-      .then(json => console.log(json));
+      .then(response => {
+        console.log(response)
+        const logged = response.ok
+        console.log(logged)
+        localStorage.setItem('@Provi:logged', logged);
+        setData(response)
+      })
+
+
+
+  }, []);
+
+  const signOut = useCallback(() => {
+    localStorage.removeItem('@Provi:logged');
+    setData();
   }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        signIn
+        signIn,
+        setData,
+        data,
+        signOut
       }}
     >
       {children}
