@@ -2,10 +2,6 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { FiPlay } from "react-icons/fi";
-// import imgBackgroundCard from '../../assets/alvo.svg';
-// import imgBackgroundCard from '../../assets/certificado.svg';
-import imgBackgroundCard from '../../assets/graphics.svg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,19 +16,25 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: '1 0 auto',
   },
+  title: {
+    fontSize: 32,
+    fontWeight: 600
+  },
+  subtitle: {
+    fontSize: 16,
+  }
 }));
 
-export default function MediaControlCard({ title, subtitle, icon, img, id, amountPayd, amountTaken, monthlyInterest, totalAmountInTaxes }) {
+export default function MediaControlCard({ title, subtitle, icon, img }) {
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <Card className={[classes.root, classes.shadow]}>
       <CardContent className={classes.content}>
         <div id="headerCard" style={{ display: 'flex' }}>
           <div>
-            <h2>{title}</h2>
-            <p>{subtitle}</p>
+            <h2 className={classes.title}>{title}</h2>
+            <p className={classes.subtitle}>{subtitle}</p>
           </div>
           <div style={{
             flex: 1,
@@ -44,7 +46,7 @@ export default function MediaControlCard({ title, subtitle, icon, img, id, amoun
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }} id="content">
           {img && (
-            <img src={img} alt="img" width={180} />
+            <img src={img} alt="img" width={130} />
           )}
         </div>
       </CardContent>
