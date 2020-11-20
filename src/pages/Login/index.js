@@ -26,7 +26,7 @@ function Login() {
       })
 
     }, 1100)
-    toast.success('Você está logado', {
+    toast.success('Seja muito bem vindo! 🤩', {
       position: "top-right",
       autoClose: 2000,
       hideProgressBar: false,

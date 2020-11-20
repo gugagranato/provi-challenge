@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -9,12 +10,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import { FiMenu, FiChevronLeft, FiChevronRight, FiImage, FiUser } from "react-icons/fi";
+import { FiMenu, FiChevronLeft, FiChevronRight, FiLogOut, FiUser } from "react-icons/fi";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import logoImg from '../../assets/logo.png';
 import { GiTakeMyMoney } from "react-icons/gi";
+import { ToastContainer, toast } from 'react-toastify';
+
+import { useAuth } from '../../context/AuthProvider';
 
 const drawerWidth = 240;
 
@@ -91,15 +95,18 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     justifyContent: 'flex-end'
   },
-  flex: {
-    display: 'flex'
+  nameMenu: {
+    display: 'flex',
+    alignItems: 'center'
   }
 }));
 
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+
+  const { signOut } = useAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -108,6 +115,20 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+  const handleSignOut = () => {
+    toast.dark('Bye bye', {
+      position: "top-right",
+      autoClose: 1100,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => signOut(), 1100);
+  }
 
   return (
     <div className={classes.root}>
@@ -132,12 +153,12 @@ export default function MiniDrawer() {
             <FiMenu size={22} />
           </IconButton>
           <div className={classes.userMenu}>
-            <div className={[classes.center, classes.flex]}>
-              <FiUser size={22} color='#0e1563' />
-              <Typography variant="h6" noWrap style={{ color: '#0e1563' }}>
-                Gustavo Granato Silva
-              </Typography>
-            </div>
+            <Button className={classes.nameMenu} type="button" onClick={handleSignOut}>
+              <p noWrap style={{ color: '#0e1563', fontSize: 16 }}>
+                Sair
+              </p>
+              <FiLogOut size={18} color='#0e1563' style={{ marginLeft: 6 }} />
+            </Button>
 
           </div>
 
@@ -196,6 +217,19 @@ export default function MiniDrawer() {
           </ListItem>
         </List>
       </Drawer>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      {/* Same as */}
+      <ToastContainer />
     </div>
   );
 }

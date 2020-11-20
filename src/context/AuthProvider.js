@@ -7,6 +7,14 @@ const AuthContext = createContext();
 export default function AuthProvider({ children }) {
   const [data, setData] = useState();
 
+  useEffect(() => {
+    const logged = localStorage.getItem('@Provi:logged');
+    console.log('logged', logged);
+
+    if (logged) {
+      setData({ ok: logged })
+    }
+  }, [setData])
   const signIn = useCallback(async ({ email, password }) => {
 
     fetch("https://reqres.in/api/login", {
@@ -20,9 +28,7 @@ export default function AuthProvider({ children }) {
       }
     })
       .then(response => {
-        console.log(response)
         const logged = response.ok
-        console.log(logged)
         localStorage.setItem('@Provi:logged', logged);
         setData(response)
       })
