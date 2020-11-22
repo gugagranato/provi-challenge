@@ -2,6 +2,7 @@ import React from 'react';
 
 
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import Grid from '@material-ui/core/Grid';
 import { FaMoneyBillAlt } from 'react-icons/fa'
 import { GiReceiveMoney } from 'react-icons/gi'
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
   nextInstallments: {
+    flex: 1,
     marginTop: 100,
     width: 500,
     padding: 16,
@@ -34,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     fontWeight: 600,
     fontSize: 34
+  },
+  alert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   }
 }));
 
@@ -76,14 +84,15 @@ function Dashboard() {
   function Installments() {
     return (
       <React.Fragment>
-        <Grid style={{ display: 'flex' }} item xs={12}>
+        <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={6}>
           <div className={classes.nextInstallments}>
-            <p className={[classes.titleNextInstallments]}>Próxima Parcela</p>
-            <p>21/21/2000</p>
-            <div>
-              <p>Valor</p>
-              <p>R$ 500,00</p>
+            <div className={classes.alert}>
+              <Alert severity="error" style={{ width: '80%' }}>
+                <AlertTitle>Atenção</AlertTitle>
+          Todas as suas parcelas estão vencidas! <strong>Entre em contato conosco para uma renegociação!</strong>
+              </Alert>
             </div>
+
           </div>
         </Grid>
 
@@ -100,13 +109,10 @@ function Dashboard() {
           <Grid container item xs={12} spacing={3}>
             <FormRow />
           </Grid>
-          <Grid container item xs={6} spacing={3}>
+          <Grid container item xs={12} spacing={3}>
             <Installments />
-          </Grid>
-          <Grid container item xs={6} spacing={3}>
-            <Grid style={{ display: 'flex', marginTop: 100 }} item xs={12}>
+            <Grid style={{ display: 'flex', marginTop: 100 }} item xs={6}>
               <TableInstallments />
-
             </Grid>
           </Grid>
         </Grid>

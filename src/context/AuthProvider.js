@@ -9,7 +9,6 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const logged = localStorage.getItem('@Provi:logged');
-    console.log('logged', logged);
 
     if (logged) {
       setData({ ok: logged })
