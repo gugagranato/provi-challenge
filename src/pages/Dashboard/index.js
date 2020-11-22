@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Dashboard() {
   const classes = useStyles();
-  const { loanDetails, loans } = useLoan();
+  const { loanDetails } = useLoan();
   const payable = loanDetails?.amountTaken - loanDetails?.amountPayd;
 
   function FormRow() {
@@ -80,23 +80,26 @@ function Dashboard() {
       </React.Fragment>
     );
   }
-
+  console.log(loanDetails)
   function Installments() {
+    const todasParcelasVencidas = 'Todas as suas parcelas estão vencidas!'
+    const entreEmContato = 'Entre em contato conosco para uma renegociação!'
     return (
-      <React.Fragment>
+      <>
+        {loanDetails?.installments?.map(installment => console.log('aa', installment.payd))}
         <Grid style={{ display: 'flex', justifyContent: 'center' }} item xs={6}>
           <div className={classes.nextInstallments}>
             <div className={classes.alert}>
               <Alert severity="error" style={{ width: '80%' }}>
                 <AlertTitle>Atenção</AlertTitle>
-          Todas as suas parcelas estão vencidas! <strong>Entre em contato conosco para uma renegociação!</strong>
+                {todasParcelasVencidas} <strong> {entreEmContato} </strong>
               </Alert>
             </div>
 
           </div>
         </Grid>
 
-      </React.Fragment>
+      </>
     );
   }
   return (
